@@ -1,0 +1,22 @@
+version: '3'
+services: 
+  web:
+    build:
+      context: web # The folder that holds the files related to this image
+      dockerfile: Dockerfile.dev # Have to define if a name used rather than 'Dockerfile'
+    ports: 
+      - "3000:3000"
+    volumes: 
+      - /usr/app/node_modules # If we keep the node_modules while creating the image
+                              # it will be added to filesystem snapshot and build time
+                              # will increase dramatically. So if we remove it to prevent
+                              # that, the next line will try to reference its downloaded
+                              # node_modules folder to the non-existing node_modules at the
+                              # local machine's project directory. To prevent that too
+                              # this line tells docker to not map a folder against the
+                              # '/usr/app/node_modules'
+                              # So without colons, the syntax prevents mapping to target folder
+      - ./web:/usr/app # Creates a mapping between local machine's project directory and
+                   # 'usr/app' folder inside the container to have live effect without 
+                   # having to rebuild and run the container. Great for development experience.
+    stdin_open: true # React app exits with 0 code without that line. Its a known bug.

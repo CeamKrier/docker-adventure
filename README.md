@@ -101,28 +101,28 @@ and the Linux kernel then will be able to do namespacing on your hardware.
 
 ### Commands
 
-• ‘docker ps’: shows running docker containers
-• ‘docker ps --all’: shows all containers that have ran
-• ‘docker system prune’: removes stopped containers, build cache, dangling images
-• ‘docker create <container name>’: creates a container, returns id of it
-• ‘docker start <container id>’: starts the container in silent mode, outputs wont display (contrary to docker run which is compose of create + start and shows logs)
-• ‘docker stop <container id>’: stops container and gives possibility to do cleanup etc.
-• ‘docker kill <container id>’: stops container immediately, no cleanup. If ‘docker stop’ cannot stop the container in 10 sec, then this command automatically being run to kill process
-• ‘docker logs <container id>’: shows all the logs have been emitted while container working, does not re-run the container
-• ‘docker exec -it <container id> <command>’: allows us to run extra command in an already running container ex: running ‘docker run redis’ and then the redis-cli inside the running container
-• ‘docker exec -it <container id> sh/bash/zsh/powershell…’: opens the terminal of the container
+ - ‘docker ps’: shows running docker containers
+ - ‘docker ps --all’: shows all containers that have ran
+ - ‘docker system prune’: removes stopped containers, build cache, dangling images
+ - ‘docker create <container name>’: creates a container, returns id of it
+ - ‘docker start <container id>’: starts the container in silent mode, outputs wont display (contrary to docker run which is compose of create + start and shows logs)
+ - ‘docker stop <container id>’: stops container and gives possibility to do cleanup etc.
+ - ‘docker kill <container id>’: stops container immediately, no cleanup. If ‘docker stop’ cannot stop the container in 10 sec, then this command automatically being run to kill process
+ - ‘docker logs <container id>’: shows all the logs have been emitted while container working, does not re-run the container
+ - ‘docker exec -it <container id> <command>’: allows us to run extra command in an already running container ex: running ‘docker run redis’ and then the redis-cli inside the running container
+ - ‘docker exec -it <container id> sh/bash/zsh/powershell…’: opens the terminal of the container
 
 ### Flags
 
-• ‘start -a’: shows the output of the container in the terminal window where it ran
-• ‘logs -f/--follow’: live log tracing
-• ‘exec -it’: allows us to provide input to the container
-• ‘run -it sh’: start the container with shell, keeps default commands from running. Ultimately good for testing stuff ex: NodeJS to run js codes like chrome devtools
-• ‘exec -i’: gets the typed stuff to the running processes STDIN. It runs the command
+ - ‘start -a’: shows the output of the container in the terminal window where it ran
+ - ‘logs -f/--follow’: live log tracing
+ - ‘exec -it’: allows us to provide input to the container
+ - ‘run -it sh’: start the container with shell, keeps default commands from running. Ultimately good for testing stuff ex: NodeJS to run js codes like chrome devtools
+ - ‘exec -i’: gets the typed stuff to the running processes STDIN. It runs the command
 
 ![Docker exec flag](./zdocs/docker-exec-flag.png)
 
-• ‘exec -t’: nicely formats + autocompletes (if command capable to do) the outputs on the screen
+ - ‘exec -t’: nicely formats + autocompletes (if command capable to do) the outputs on the screen
 
 ### Creating custom images
 

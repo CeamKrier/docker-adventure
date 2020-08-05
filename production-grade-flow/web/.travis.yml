@@ -4,7 +4,7 @@ services:
   - docker
 
 before_install: # The tasks that has to done before running the primary work, pre-requisite section.
-  - docker build -t ceamkrier/web -f Dockerfile.dev .
+  - docker build -t ceamkrier/web -f ./production-grade-flow/web/Dockerfile.dev .
 
 script:
   - docker run -e CI=true ceamkrier/web npm run test -- --coverage # `-- --coverage` flag added to make test script terminate and return status code after ran

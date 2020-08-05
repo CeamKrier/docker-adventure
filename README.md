@@ -20,28 +20,35 @@ run it and finally we will have our redis instance running in isolated container
 ### How does `docker run hello-world` work?
 
 ![Docker hello-world](./zdocs/running-hello-world.png)
+
 If image that ran is locally presented(in image cache), then directly will be run.
 Otherwise, image will be retrieved from docker hub and then run. Subsequent runs will be as above (from the cache).
 
 ### How does container work?
 
 To understand that, we need to look at how the operating system works.
+
 ![How container works](./zdocs/how-container-works.png)
+
 All running programs will issue requests to the Kernel to interact with a piece of hardware.
 So, the job of the kernel to govern access between running processes and hardware.
 
 Assume the following scenario:
+
 ![How container works 2](./zdocs/how-container-works-2.png)
+
 Two programs running, Chrome needs py2 to run where NodeJS needs py3. But in the hard disk, we only have access to py2.
 So, NodeJS will not be able to work. How can we make both to work?
 
 ![How container works 3](./zdocs/how-container-works-3.png)
+
 Operating systems have a feature called as namespacing. With it, we can look at all the hardware resources connected to computer
 and we can segment out portions of those resources.
 
 As shown on left, we segment our hard disk dedicated specifically house py2 and py3.
 
 ![How container works 4](./zdocs/how-container-works-4.png)
+
 To properly make both processes work, they has to access their segments.
 
 To ensure Chrome and NodeJS has access to right segments, the kernel will govern that access.
@@ -49,6 +56,7 @@ To ensure Chrome and NodeJS has access to right segments, the kernel will govern
 Thus, Chrome and NodeJS will be able to work on the same machine (as the example).
 
 ![Heart of docker: namespacing](./zdocs/heart-of-docker-namespacing.png)
+
 Namespacing will isolate the hard drive resources per process/or for group of processes
 
 Where control groups will limit the usage of the hard drives.
@@ -56,16 +64,20 @@ Where control groups will limit the usage of the hard drives.
 Specific to Linux OS
 
 ![Segmenting the hard drives](./zdocs/segmented-out-container.png)
+
 So the container will be then a running process/ or set of processes + segment of resources the process/es can talk to.
 The container should not be thought as a physical construct.
 
 The simplified version of the container as shown below
+
 ![Simplified docker container](./zdocs/docker-inner-dynamics-nutshell.png)
 
 ### Relation between Image and Container
 
 How does the single image finally can create the container?
+
 ![Simplified docker container](./zdocs/image-snapshot.png)
+
 Whenever we talk about Image, we refer to a file system snapshot.
 It is very specific set of directories and files that is required to run the process the image holds.
 
@@ -74,11 +86,13 @@ snapshot to a new segment inside the hard disk. Finally, the process will be run
 
 This is how the container then would look like
 Chrome and Python placed into the segmented hard-drive
+
 ![Image details](./zdocs/image-details.png)
 
 ### How does docker run on my computer if namespacing is just specific for the Linux OS?
 
 ![Namespacing and other OS](./zdocs/namespacing-and-other-os.png)
+
 When we installed docker for Win/Mac, we installed a Linux virtual machine.
 So as long as docker running, the Linux virtual machine will be running in your computer.
 
@@ -105,7 +119,9 @@ and the Linux kernel then will be able to do namespacing on your hardware.
 • ‘exec -it’: allows us to provide input to the container
 • ‘run -it sh’: start the container with shell, keeps default commands from running. Ultimately good for testing stuff ex: NodeJS to run js codes like chrome devtools
 • ‘exec -i’: gets the typed stuff to the running processes STDIN. It runs the command
+
 ![Docker exec flag](./zdocs/docker-exec-flag.png)
+
 • ‘exec -t’: nicely formats + autocompletes (if command capable to do) the outputs on the screen
 
 ### Creating custom images
@@ -119,6 +135,7 @@ Downloading OS(base image) as alpine
 By using ‘apk’ package manager, redis being downloaded and installed onto OS
 
 Writing a dockerfile is like installing the chrome to a computer with no OS.
+
 ![Dockerfile flow](./zdocs/dockerfile-flow.png)
 
 ![Dockerfile base image](./zdocs/dockerfile-base-image.png)
@@ -126,20 +143,25 @@ Writing a dockerfile is like installing the chrome to a computer with no OS.
 ### Build process
 
 In every step defined in dockerfile, a temporary container created to hold upcoming changes that are defined in that step.
+
 ![Docker build basic](./zdocs/docker-build-basic.png)
+
 Created container’s id is at the bottom with alpine OS installed inside of it.
 
 ![Docker build second step](./zdocs/docker-build-2nd-step.png)
+
 In second step, firstly the temporary container created, and necessary changes made on it(downloaded and installed the redis).
 After, the snapshot of that container taken, and a final container being created because of the step. Temporary container then deleted
 
 ![Docker build third step](./zdocs/docker-build-3rd-step.png)
+
 Lastly, the commands are put into startup command of another temporary container that created from the snapshot of the previous step.
 A new container created from the snapshot and temporary deleted. Thus, the build process succeeds
 
 ![Docker build result](./zdocs/docker-build-result.png)
 
 Below, overall flow can be seen.
+
 ![Docker build overall 1](./zdocs/docker-build-overall-1.png)
 
 ![Docker build overall 2](./zdocs/docker-build-overall-2.png)
@@ -150,6 +172,7 @@ unchanged steps inside the dockerfile. Starting from the changed step the tempor
 ### Tagging an image
 
 ![Docker tagging image](./zdocs/tagging-image.png)
+
 ![Docker tagging convention](./zdocs/tagging-convention.png)
 
 ### A NodeJS app with docker
@@ -172,13 +195,16 @@ argument to port incoming traffic from somewhere in the host machine to the cont
 ![Docker run port mapping](./zdocs/docker-run-port-mapping.png)
 
 To specify a working directory, inside the dockerfile:
+
 ![Dockerfile workdir](./zdocs/dockerfile-workdir.png)
+
 All the commands and instructions will be run relative to that directory.
 That’s a good practice to define a working directory to not cause conflicts while copying project related files to the base images file system.
 
 For example, if we change the content of ‘index.js’ on the application and re-run the docker build process,
 docker will recognize the changed file and will not use cached version of that step and on the following steps.
 That is not good in terms of performance. To overcome that:
+
 ![Dockerfile optimization](./zdocs/dockerfile-optimization.png)
 
 We can just copy the ‘package.json’ file at first and run the ‘npm install’ to get needed packages and then copy the rest of the project files.

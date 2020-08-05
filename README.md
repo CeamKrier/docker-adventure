@@ -14,7 +14,7 @@ Those notes based on the udemy course that being given by [Stephen Grider](https
 Container is a program with its own isolated set of hardware resources (own little space of memory, networking technology and hard drive)
 
 Image is single file that has specifics to run a single program.
-‘docker run redis’ for example: that would fetch the image from the docker hub (like GitHub but for docker images) and
+`docker run redis` for example: that would fetch the image from the docker hub (like GitHub but for docker images) and
 run it and finally we will have our redis instance running in isolated container.
 
 ### How does `docker run hello-world` work?
@@ -42,8 +42,8 @@ So, NodeJS will not be able to work. How can we make both to work?
 
 ![How container works 3](./zdocs/how-container-works-3.png)
 
-Operating systems have a feature called as namespacing. With it, we can look at all the hardware resources connected to computer
-and we can segment out portions of those resources.
+Operating systems have a feature called as **namespacing**. With it, we can look at all the hardware resources connected to computer
+and we can **segment out** portions of those resources.
 
 As shown on left, we segment our hard disk dedicated specifically house py2 and py3.
 
@@ -65,8 +65,8 @@ Specific to Linux OS
 
 ![Segmenting the hard drives](./zdocs/segmented-out-container.png)
 
-So the container will be then a running process/ or set of processes + segment of resources the process/es can talk to.
-The container should not be thought as a physical construct.
+So the container will be then **a running process/ or set of processes + segment of resources the process/es can talk to.**
+The container **should not be thought** as a **physical construct**.
 
 The simplified version of the container as shown below
 
@@ -74,7 +74,7 @@ The simplified version of the container as shown below
 
 ### Relation between Image and Container
 
-How does the single image finally can create the container?
+How does the **single image finally can create the container?**
 
 ![Simplified docker container](./zdocs/image-snapshot.png)
 
@@ -101,28 +101,28 @@ and the Linux kernel then will be able to do namespacing on your hardware.
 
 ### Commands
 
- - ‘docker ps’: shows running docker containers
- - ‘docker ps --all’: shows all containers that have ran
- - ‘docker system prune’: removes stopped containers, build cache, dangling images
- - ‘docker create <container name>’: creates a container, returns id of it
- - ‘docker start <container id>’: starts the container in silent mode, outputs wont display (contrary to docker run which is compose of create + start and shows logs)
- - ‘docker stop <container id>’: stops container and gives possibility to do cleanup etc.
- - ‘docker kill <container id>’: stops container immediately, no cleanup. If ‘docker stop’ cannot stop the container in 10 sec, then this command automatically being run to kill process
- - ‘docker logs <container id>’: shows all the logs have been emitted while container working, does not re-run the container
- - ‘docker exec -it <container id> <command>’: allows us to run extra command in an already running container ex: running ‘docker run redis’ and then the redis-cli inside the running container
- - ‘docker exec -it <container id> sh/bash/zsh/powershell…’: opens the terminal of the container
+ - `docker ps`: shows running docker containers
+ - `docker ps --all`: shows all containers that have ran
+ - `docker system prune`: removes stopped containers, build cache, dangling images
+ - `docker create <container name>`: creates a container, returns id of it
+ - `docker start <container id>`: starts the container in silent mode, outputs wont display (contrary to docker run which is compose of create + start and shows logs)
+ - `docker stop <container id>`: stops container and gives possibility to do cleanup etc.
+ - `docker kill <container id>`: stops container immediately, no cleanup. If `docker stop` cannot stop the container in 10 sec, then this command automatically being run to kill process
+ - `docker logs <container id>`: shows all the logs have been emitted while container working, does not re-run the container
+ - `docker exec -it <container id> <command>`: allows us to run extra command in an already running container ex: running `docker run redis` and then the redis-cli inside the running container
+ - `docker exec -it <container id> sh/bash/zsh/powershell…`: opens the terminal of the container
 
 ### Flags
 
- - ‘start -a’: shows the output of the container in the terminal window where it ran
- - ‘logs -f/--follow’: live log tracing
- - ‘exec -it’: allows us to provide input to the container
- - ‘run -it sh’: start the container with shell, keeps default commands from running. Ultimately good for testing stuff ex: NodeJS to run js codes like chrome devtools
- - ‘exec -i’: gets the typed stuff to the running processes STDIN. It runs the command
+ - `start -a`: shows the output of the container in the terminal window where it ran
+ - `logs -f/--follow`: live log tracing
+ - `exec -it`: allows us to provide input to the container
+ - `run -it sh`: start the container with shell, keeps default commands from running. Ultimately good for testing stuff ex: NodeJS to run js codes like chrome devtools
+ - `exec -i`: gets the typed stuff to the running processes STDIN. It runs the command
 
 ![Docker exec flag](./zdocs/docker-exec-flag.png)
 
- - ‘exec -t’: nicely formats + autocompletes (if command capable to do) the outputs on the screen
+ - `exec -t`: nicely formats + autocompletes (if command capable to do) the outputs on the screen
 
 ### Creating custom images
 
@@ -132,9 +132,9 @@ and the Linux kernel then will be able to do namespacing on your hardware.
 
 Downloading OS(base image) as alpine
 
-By using ‘apk’ package manager, redis being downloaded and installed onto OS
+By using `apk` package manager, redis being downloaded and installed onto OS
 
-Writing a dockerfile is like installing the chrome to a computer with no OS.
+Writing a dockerfile is like **installing the chrome to a computer with no OS.**
 
 ![Dockerfile flow](./zdocs/dockerfile-flow.png)
 
@@ -146,7 +146,7 @@ In every step defined in dockerfile, a temporary container created to hold upcom
 
 ![Docker build basic](./zdocs/docker-build-basic.png)
 
-Created container’s id is at the bottom with alpine OS installed inside of it.
+Created container`s id is at the bottom with alpine OS installed inside of it.
 
 ![Docker build second step](./zdocs/docker-build-2nd-step.png)
 
@@ -167,7 +167,7 @@ Below, overall flow can be seen.
 ![Docker build overall 2](./zdocs/docker-build-overall-2.png)
 
 If we run the docker build on the same dockerfile more than once, the cache mechanism will serve the already generated images for
-unchanged steps inside the dockerfile. Starting from the changed step the temporary container creation flow will happen again. Great for speed.
+unchanged steps inside the dockerfile. Starting from the changed step the temporary container creation flow will happen again. **Great for speed.**
 
 ### Tagging an image
 
@@ -177,19 +177,19 @@ unchanged steps inside the dockerfile. Starting from the changed step the tempor
 
 ### A NodeJS app with docker
 
-We used alpine distro of Linux in previous examples as our base image. To create a NodeJS app, we need to have ‘npm’ installed on our file system too.
-There is two way to achieve that. Either we specify the installation of ‘npm’ in the dockerfile or we use a base image that already have the ‘npm’ in it.
+We used alpine distro of Linux in previous examples as our base image. To create a NodeJS app, we need to have `npm` installed on our file system too.
+There is two way to achieve that. Either we specify the installation of `npm` in the dockerfile or we use a base image that already have the `npm` in it.
 
 `FROM node:alpine`
-To follow the second scenario, we must download the ‘node:alpine’ which is the Linux distro of alpine + NodeJS.
+To follow the second scenario, we must download the `node:alpine` which is the Linux distro of alpine + NodeJS.
 
 `COPY . .`
-In NodeJS environment, dependencies of the application held in ‘package.json’ file. When the docker run the ‘npm install’ command to get
+In NodeJS environment, dependencies of the application held in `package.json` file. When the docker run the `npm install` command to get
 packages that being used at the project, the file must represent in the directory. To achieve that, we copy all the files of project to the docker
-image’s filesystem with the command above.
+image`s filesystem with the command above.
 
 At that point, the dockerized node app will successfully run. But when we try to access it on localhost address we simply
-can’t (because of the isolated nature of the container). To overcome that, we need to run the container with an extra
+can`t (because of the isolated nature of the container). To overcome that, we need to run the container with an extra
 argument to port incoming traffic from somewhere in the host machine to the container.
 
 ![Docker run port mapping](./zdocs/docker-run-port-mapping.png)
@@ -199,22 +199,22 @@ To specify a working directory, inside the dockerfile:
 ![Dockerfile workdir](./zdocs/dockerfile-workdir.png)
 
 All the commands and instructions will be run relative to that directory.
-That’s a good practice to define a working directory to not cause conflicts while copying project related files to the base images file system.
+That`s a good practice to define a working directory to not cause conflicts while copying project related files to the base images file system.
 
-For example, if we change the content of ‘index.js’ on the application and re-run the docker build process,
+For example, if we change the content of `index.js` on the application and re-run the docker build process,
 docker will recognize the changed file and will not use cached version of that step and on the following steps.
 That is not good in terms of performance. To overcome that:
 
 ![Dockerfile optimization](./zdocs/dockerfile-optimization.png)
 
-We can just copy the ‘package.json’ file at first and run the ‘npm install’ to get needed packages and then copy the rest of the project files.
-In that way, we will not wait for re-install of node packages if we just change the project related files except the ‘package.json’.
+We can just copy the `package.json` file at first and run the `npm install` to get needed packages and then copy the rest of the project files.
+In that way, we will not wait for re-install of node packages if we just change the project related files except the `package.json`.
 
-It is a good convention to copy just the bare minimum content in each successful step to avoid unnecessary step re-runs.
+It is a good convention to **copy just the bare minimum content in each successful step to avoid unnecessary step re-runs.**
 
 ### Docker compose
 
-We need to specify what containers should be able to network between each other in a file called docker-compose.yml.
+We need to specify what containers should be able to network between each other in a file called **docker-compose.yml.**
 
 ![Docker compose info](./zdocs/docker-compose-info.png)
 
@@ -223,28 +223,28 @@ To establish communication between node app and redis, the docker-compose.yml fi
 
 ![Docker compose file](./zdocs/docker-compose-file.png)
 
-Services are images that we want to communicate between each other. Their names (‘redis-app’ or ‘node-app’) are becoming
-accessible references inside the source codes. Check out the ‘redis-app’ reference at the ‘createClient’ function.
+Services are images that we want to communicate between each other. Their names (`redis-app` or `node-app`) are becoming
+accessible references inside the source codes. Check out the `redis-app` reference at the `createClient` function.
 
 ![Docker compose service service name accessability](./zdocs/docker-compose-service-name-accessable.png)
 
-The ‘6379’ is the default port of the redis server.
+The `6379` is the default port of the redis server.
 
 ### Docker compose commands
 
 ![Docker compose vs docker run](./zdocs/docker-compose-vs-run.png)
 
 For some reason I could not see updated versions of my images when I ran that command. So had to re-build updated
-image to see the change when I have run ‘docker-compose up’.
+image to see the change when I have run `docker-compose up`.
 
 ![Docker compose up](./zdocs/docker-compose-up.png)
 
-When we run the ‘docker-compose up’ command, it does run at the foreground.
+When we run the `docker-compose up` command, it does run at the foreground.
 
 ![Docker compose up silent](./zdocs/docker-compose-up-silent.png)
 
-And if we want to use the same terminal window then we can use the ‘-d’ flag to run whole process in the background.
-We can stop all the containers that started by the docker-compose with ‘docker-compose down’.
+And if we want to use the same terminal window then we can use the `-d` flag to run whole process in the background.
+We can stop all the containers that started by the docker-compose with `docker-compose down`.
 
 ### Automatic container restart in docker-compose
 
@@ -259,7 +259,7 @@ Those policies can be defined in the services that being ran by the docker-compo
 ![Docker compose ps](./zdocs/docker-compose-ps.png)
 
 All of the docker-compose commands work respect to a docker-compose.yml file. To successfully run those commands,
-the corresponding ‘.yml’ file must exist in the folder where we run them.
+the corresponding `.yml` file must exist in the folder where we run them.
 
 ### Docker volumes
 
@@ -284,3 +284,14 @@ We can use the old command we learned, exec, to run additional commands inside o
 `docker exec -it <container-id> npm run test`
 
 With that, whenever the content of tests change, they will automatically re-run.
+
+### Production grade dockerfile
+
+![Production version dockerfile](./zdocs/dockerfile-production-version.png)
+
+There is two separate steps to make production version of react app to work. At first, the react application built. 
+Then it served with the nginx server.
+
+![Why nginx required for production?](./zdocs/docker-production-nginx.png)
+
+We must have a server to serve files that are generated by the react build process. That is why we use the nginx there.

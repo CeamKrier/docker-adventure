@@ -10,14 +10,17 @@ before_install: # The tasks that has to done before running the primary work, pr
 script:
   - docker run -e CI=true ceamkrier/web npm run test -- --coverage # `-- --coverage` flag added to make test script terminate and return status code after ran
 
-deploy: 
-  provider: elasticbeanstalk # I refer it as EBS blow
-  region: "us-east-1" # AWS account region
-  app: "docker-react-app" # EBS app name defined by us
-  env: "DockerReactApp-env" # EBS environment name
-  bucket_name: "elasticbeanstalk-us-east-1-278641150682" # AWS S3 Bucket name, generated automatically upon creating elastic beanstalk
-  bucket_path: "docker-react-app" # Will be created upon first deploy
-  on: # Define conditions of deploy
-    branch: master # Whenever a code pushed to the master branch
-  access_key_id: $AWS_ACCESS_KEY # Values are defined at Travis's console
-  secret_access_key: $AWS_SECRET_KEY # Defined at Travis's console
+# Removed my AWS account, was just for test, so the section below will cause error on Travis. 
+# So commented out that.
+# TODO: Try to deploy on Heroku  
+# deploy: 
+#   provider: elasticbeanstalk # I refer it as EBS blow
+#   region: "us-east-1" # AWS account region
+#   app: "docker-react-app" # EBS app name defined by us
+#   env: "DockerReactApp-env" # EBS environment name
+#   bucket_name: "elasticbeanstalk-us-east-1-278641150682" # AWS S3 Bucket name, generated automatically upon creating elastic beanstalk
+#   bucket_path: "docker-react-app" # Will be created upon first deploy
+#   on: # Define conditions of deploy
+#     branch: master # Whenever a code pushed to the master branch
+#   access_key_id: $AWS_ACCESS_KEY # Values are defined at Travis's console
+#   secret_access_key: $AWS_SECRET_KEY # Defined at Travis's console

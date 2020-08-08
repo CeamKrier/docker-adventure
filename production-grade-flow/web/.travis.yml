@@ -4,9 +4,20 @@ services:
   - docker
 
 before_install: # The tasks that has to done before running the primary work, pre-requisite section.
-  - cd ./production-grade-flow/web
+  - cd ./production-grade-flow/web # Required to add since we trigger the CI work from the root directory of repository's .travis.yml file
   - docker build -t ceamkrier/web -f Dockerfile.dev .
 
 script:
   - docker run -e CI=true ceamkrier/web npm run test -- --coverage # `-- --coverage` flag added to make test script terminate and return status code after ran
-  
+
+deploy: 
+  provider: elasticbeanstalk # I refer it as EBS blow
+  region: "us-east-1" # AWS account region
+  app: "docker-react-app" # EBS app name defined by us
+  env: "DockerReactApp-env" # EBS environment name
+  bucket_name: "elasticbeanstalk-us-east-1-278641150682" # AWS S3 Bucket name, generated automatically upon creating elastic beanstalk
+  bucket_path: "docker-react-app" # Will be created upon first deploy
+  on: # Define conditions of deploy
+    branch: master # Whenever a code pushed to the master branch
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY

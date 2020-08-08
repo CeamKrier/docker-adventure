@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "nodemon": "2.0.4",
+    "redis": "latest"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon"
+  }
+}

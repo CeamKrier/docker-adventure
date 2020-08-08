@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "fg": "latest",
+    "express": "latest",
+    "redis": "latest",
+    "cors": "latest",
+    "nodemon": "latest"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon"
+  }
+}

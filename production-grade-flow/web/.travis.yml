@@ -19,5 +19,5 @@ deploy:
   bucket_path: "docker-react-app" # Will be created upon first deploy
   on: # Define conditions of deploy
     branch: master # Whenever a code pushed to the master branch
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+  access_key_id: $AWS_ACCESS_KEY # Values are defined at Travis's console
+  secret_access_key: $AWS_SECRET_KEY # Defined at Travis's console

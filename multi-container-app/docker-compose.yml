@@ -1,0 +1,50 @@
+version: '3'
+services: 
+  postgres: # Available on docker hub
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_PASSWORD=postgres_password # Default
+  redis: # Available on docker hub
+    image: 'redis:latest'
+  nginx:
+    restart: always # We always want that to be ready to work since it is the entry point
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports: 
+      - "8080:80" # Our application will be accessable from port 8080 and will be mapped to port defined in the nginx config
+  api: # Custom image built by us, changed name from server to api for nginx because server is keyword in the conf file
+    depends_on: 
+      - postgres
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes:
+      - /usr/app/node_modules # Prevent mapping of node modules
+      - ./server:/usr/app # Map all of the server files into /usr/app (Working directory of that image defined in its own dockerfile) folder in the container
+    environment: # Those will be exposed to process.env
+      - REDIS_HOST=redis # Defined service name up above
+      - REDIS_PORT=6379 # Default
+      - PG_USER=postgres
+      - PG_HOST=postgres # Defined service name up above
+      - PG_PORT=5432 # Default
+      - PG_DATABASE=postgres
+      - PG_PASSWORD=postgres_password # Default
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes: 
+      - /usr/app/node_modules # Do not map node_modules
+      - ./client:/usr/app # # Map all of the client files into /usr/app folder in the container
+    stdin_open: true # React app exits with 0 code without that line. Its a known bug
+  worker:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./worker
+    volumes: 
+      - /usr/app/node_modules
+      - ./worker:/usr/app
+    environment: 
+      - REDIS_HOST=redis # Defined service name up above
+      - REDIS_PORT=6379 # Default

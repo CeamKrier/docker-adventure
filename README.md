@@ -111,6 +111,10 @@ and the Linux kernel then will be able to do namespacing on your hardware.
  - `docker logs <container id>`: shows all the logs have been emitted while container working, does not re-run the container
  - `docker exec -it <container id> <command>`: allows us to run extra command in an already running container ex: running `docker run redis` and then the redis-cli inside the running container
  - `docker exec -it <container id> sh/bash/zsh/powershell…`: opens the terminal of the container
+ - `docker build -f Dockerfile.dev .`: generates the image with a custom named dockerfile
+ - `docker-compose rm`: removes generated docker-compose containers. Useful on re-runs if the `--build` does not do the trick
+ - `docker-compose up/down`: starts related services of docker-compose and stops
+ - `docker-compose ps`: shows running docker-compose containers
 
 ### Flags
 

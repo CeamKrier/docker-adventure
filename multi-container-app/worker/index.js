@@ -17,7 +17,8 @@ function fibonacci(n) {
 
 // Whenever new values shows up in redis, we calculate the fib value and set it inside of a hash called 'values'.
 sub.on('message', (channel, message) => {
-  sub.hset('values', message, fibonacci(+message))
+  console.log(message, fibonacci(+message))
+  redisClient.hset('values', message, fibonacci(+message))
 })
 
 sub.subscribe('insert') // We will use 'insert' key-named event to trigger the code above

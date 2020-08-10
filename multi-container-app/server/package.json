@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "fg": "latest",
+    "pg": "latest",
     "express": "latest",
     "redis": "latest",
     "cors": "latest",

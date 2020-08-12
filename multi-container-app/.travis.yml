@@ -4,6 +4,7 @@ services:
   - docker
 # Before we build the production version, we will run our tests
 before_install:
+  - cd ./multi-container-app # Required to add since we trigger the CI work from the root directory of repository's .travis.yml file
   - docker build -t ceamkrier/react-test -f ./client/Dockerfile.dev ./client # Building dev version to run tests
 script:
   - docker run -e CI=true ceamkrier/react-test npm test # Running the tests

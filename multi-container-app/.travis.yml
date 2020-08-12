@@ -1,0 +1,25 @@
+language: generic
+sudo: required
+services:
+  - docker
+# Before we build the production version, we will run our tests
+before_install:
+  - docker build -t ceamkrier/react-test -f ./client/Dockerfile.dev ./client # Building dev version to run tests
+script:
+  - docker run -e CI=true ceamkrier/react-test npm test # Running the tests
+
+# After the script above did not exit without non-zero code, in other words: if did not fail
+after_success:
+  # Build all the containers inside our application with their production Dockerfile's
+ - docker build -t ceamkrier/multi-client ./client
+ - docker build -t ceamkrier/multi-nginx ./nginx
+ - docker build -t ceamkrier/multi-server ./server
+ - docker build -t ceamkrier/multi-worker ./worker
+  # Login to Docker CLI to be able to push our images to the hub
+ - echo "$DOCKER_PW" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take generated docker images and push them to the docker hub
+ - docker push ceamkrier/multi-client
+ - docker push ceamkrier/multi-nginx
+ - docker push ceamkrier/multi-server
+ - docker push ceamkrier/multi-worker
+  

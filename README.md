@@ -332,3 +332,35 @@ To integrate `nginx` to serve static files:
 ![Inner nginx config](./zdocs/inner-nginx-config.png)
 
 ![Multi container app - production flow](./zdocs/multi-container-app-production-flow.png)
+
+## Kubernetes
+
+Lets assume that we need to **scale** the application below according to workload we get.
+As we know, **worker** is doing the **heavy-lifting** part which is responsible to calculate fibonacci values.
+So, it is logical to see that we will need **more instances** of that container at some point.
+
+![Traditional compose structure](./zdocs/traditional-compose-structure.png)
+
+But it is not easy to achieve that in the world of elastic beanstalk (and probably in every other SaaS products).
+
+![Elastic beanstalk scaling strategy](./zdocs/elastic-beanstalk-scaling-strategy.png)
+
+Rather than creating the container that in need, EBS does create **whole set of containers** which is unnecessary.
+The ideal way is to create only **what we in need** and that is what **kubernetes** allows us to have.
+
+![Kubernetes details](./zdocs/kubernetes-details.png)
+
+Each of the blue boxes (Nodes) here are a virtual machine or a physical computer that is going to run some number of containers.
+Each of them can run different containers, images in various numbers. Nodes does not need to be **identical**.
+
+All those different nodes are managed by **master**. Master has **control over** each of these **nodes** at any given time.
+We **can interact** with kubernetes cluster by reaching out to this master.
+
+![Kubernetes what and why](./zdocs/kubernetes-what-why.png)
+
+![Working with kubernetes](./zdocs/workin-with-kubernetes.png)
+
+![Minikube and Kubectl](./zdocs/minikube-kubectl.png)
+
+**Minikube** is respobsile to create kubernetes cluster. It is only for **development**.
+**Kubectl** will help us to interact kubernetes cluster and manage what the node should do. Both for **production** and **development**.

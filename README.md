@@ -364,3 +364,70 @@ We **can interact** with kubernetes cluster by reaching out to this master.
 
 **Minikube** is respobsile to create kubernetes cluster. It is only for **development**.
 **Kubectl** will help us to interact kubernetes cluster and manage what the node should do. Both for **production** and **development**.
+
+#### Comparison of Docker Compose to Kubernetes configuration
+
+![Kkubernetes vs docker compose flow](./zdocs/kubernetes-vs-docker-compose-flow.png)
+
+There is a naming convention while defining our configuration files for the kubernetes; `Pod` and `Node`. 
+
+![Pod and Node naming convention on config files](./zdocs/pod-and-node-naming-convention-on-config-files.png)
+
+When we look at the big picture of the Kubernetes and the pod relation, the relation is as below. `Node` being the environment to run container/s (must be closely related if there is more than one container) and the `Pod` is the grouping element. By using the `Pod` we will have the referencing by the container names while establishing the inter-communication of containers inside a single `Pod`.
+
+![Big picture of kubernetes and pod relation](./zdocs/kubernetes-node-pod-big-picture.png)
+
+![Pod vs Node](./zdocs/pod-vs-node-kubernetes.png)
+
+Config files that we created (`client-pod.yml` or `client-node-port.yml`) does not create a container but they create something called `object`. To do that we will pass those config files to the `kubectl` and we will have our objects out of each file.
+
+![Kubernetes object types](./zdocs/kubernetes-object-types.png)
+
+The `kind` property inside the config files is an indication of the type of object that is going to created.
+
+![apiVersion versioning details](./zdocs/apiVersion-versioning-detail.png)
+
+According to choosen `apiVersion`, there will be different set of properties that we can use. We will change that according to whatever type of object that we need to create. Because we will need specific properties and those can be accessable through defining the right `apiVersion`.
+
+#### Interaction between Service NodePort and Pod
+
+![Kubernetes service Types](./zdocs/kubernetes-service-types.png)
+
+The kubernetes Node is created by either Minikube or Docker Kubernetes according to configuration of the developer.
+
+The service will establish a comminication layer between outside world and the container that is running inside the pod.
+`kube-proxy` automatically generated for every single member of the kubernetes cluster and it is the window to outside world. It will inspect the incoming request and will decide how to route it to different services/pods inside of the kubernetes node.
+
+![Interaction between service and pod](./zdocs/interaction-between-service-and-pod-kubernetes.png)
+
+#### NodePort Service ports in detail
+
+- `port`: used to accept connection from other pod/s that needs to connect `multi-client` pod
+- `targetPort`: the port that `multi-client` working on
+- `nodePort`: browser going to access to `multi-client` from that port
+
+![Ports in detail - Service](./zdocs/kubernetes-service-ports-in-detail.png)
+
+### Kubectl Commands
+
+ - `kubectl apply -f <config file>`: generates a new object out of the configuration file. `-f` says we have a config file for that
+ - `kubectl get pods`: retrieves information about generated pod objets
+ - `kubectl get services`: retrieves information about generated service objects
+ - `kubectl delete <object type>/<object name>`: removes the generated object
+
+#### Kubernetes deployment flow
+
+If a container somehow gets terminated, the master will be notified about that. It will issue necessary commands to start back that missing container in an appropriate node. Master constantly will work to fullfil the issued needs of the developer.
+
+![Kubernetes deployment flow](./zdocs/kubernetes-entire-deploymeny-flow.png)
+
+#### Takeaways of Kubernetes
+
+![Takeaways of Kubernetes](./zdocs/kubernetes-takeaways.png)
+
+#### Declarative vs. Imperative Deployments
+
+There is two way to convey what we want from Kubernetes to do: declarative or imperative approach. 
+Mostly, declarative approach used by the community. Beacuse, most of the work handled by the internals of the Kubernetes in that way. It way more easier than imperative approach. 
+
+![Declarative vs Imperative Deployment](./zdocs/kubernetes-declarative-vs-imperative-deployment.png)

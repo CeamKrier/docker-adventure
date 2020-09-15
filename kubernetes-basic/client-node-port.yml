@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: client-node-port
+spec:
+  type: NodePort # Type of the service
+  ports:
+    - port: 3050 # Accepts incoming connections from that port to `web` container
+      targetPort: 3000 # Port of the `web` container
+      nodePort: 31515 # Browsers will access to the `web` container from that port
+  selector:
+    component: web # We defined that info at `client-pod.yml` file's metadata's labels section. Thus, we can select it here.

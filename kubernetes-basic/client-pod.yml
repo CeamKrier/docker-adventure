@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client-pod
+  labels:
+    component: web # Can be selected with that given key-value pair. So, the key `component` is not a convention there. Just an arbitrary key.
+spec:
+  containers: # Containers that will run inside that pod
+    - name: client # Name of the container in that pod
+      image: stephengrider/multi-client # Image must be uploaded to docker hub. Kubernetes does not provide build process.
+      ports:
+        - containerPort: 3000 # Exposing this port to outside world, like we did in the multi-container-app's client
+  # - name: anotherOne

@@ -1,0 +1,19 @@
+apiVersion: apps/v1 # Deployment defined in that apiVersion
+kind: Deployment
+metadata:
+  name: client-deployment # Deployment name
+spec:
+  replicas: 1 # Number of pods that will created according to the template
+  selector:
+    matchLabels:
+      component: web # Will select key value of Pod as defined there
+  template: # Listing pods below
+    metadata:
+      labels:
+        component: web # Label of the Pod
+    spec:
+      containers:
+        - name: client # Name of the container inside the pod
+          image: stephengrider/multi-client # Image of the container
+          ports:
+            - containerPort: 3000 # That port will be exposed from the container to the outside

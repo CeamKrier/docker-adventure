@@ -411,9 +411,14 @@ The service will establish a comminication layer between outside world and the c
 ### Kubectl Commands
 
  - `kubectl apply -f <config file>`: generates a new object out of the configuration file. `-f` says we have a config file for that
- - `kubectl get pods`: retrieves information about generated pod objets
+ - `kubectl get pods`: retrieves information about generated pod objets. `-o wide` to have more details.
  - `kubectl get services`: retrieves information about generated service objects
+ - `kubectl get deployments`: retrieves information about generated deployment objects
  - `kubectl delete <object type>/<object name>`: removes the generated object
+ - `kubectl delete -f <config file>`: removes the generated object according to given config file
+ - `kubectl describe <object type> <object name>`: retrieves detailed info about an object
+ - `kubectl logs <object name>`: retrieves the logs created inside of the container of the object
+ - `kubectl exec -it <object name> sh`: starts up a shell inside the container of the object
 
 #### Kubernetes deployment flow
 
@@ -431,3 +436,30 @@ There is two way to convey what we want from Kubernetes to do: declarative or im
 Mostly, declarative approach used by the community. Beacuse, most of the work handled by the internals of the Kubernetes in that way. It way more easier than imperative approach. 
 
 ![Declarative vs Imperative Deployment](./zdocs/kubernetes-declarative-vs-imperative-deployment.png)
+
+#### Updating an existing Pod
+
+If a pod has already created, we can update it by manipulating the existing config file of it. We need to keep the `name` and `kind` property the same and changing other parameters will make the update. Otherwise, a new object will be created.
+
+![Updating an existing pod](./zdocs/kubernetes-update-existing-pod.png)
+
+But, we can't change all the properties after an `Pod` object has created. This is a limitation specific to the `kind` of `Pod`. There is another `kind` called `Deployment` which enables us to update each `Pod` inside of it.
+
+![Pods to deployments](./zdocs/kubernetes-pods-to-deployments.png)
+
+#### Why we use Services?
+
+Every created pod will have its own IP address. We can directly access a pod with its IP address. What if the pod gets killed? The `kubectl` will start a new pod and will assign it a random IP address. At that moment, we won't be able to access the newly created pod.
+
+Thats why we are using the `Service`. It will hold the necessary info about the created pods and will provide a static access point. It won't get effected by the internal changes about the pods getting deleted/re-created.
+
+#### Updating a deployment image
+
+Let's say we made some changes to our docker image and want to update our kubernetes pods according to it. To achieve that, we need to set the image name via an imperative command.
+
+ - `kubectl set image <object type>/<object name> <container name>=<new image name>`
+
+We would have it as
+ - `kubectl set image deployment/client-deployment client=stephengrider/multi-client:v8`
+
+With that, all the pods with given container name will have their image name set to the given parameter.

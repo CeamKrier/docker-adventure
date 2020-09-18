@@ -419,6 +419,9 @@ The service will establish a comminication layer between outside world and the c
  - `kubectl describe <object type> <object name>`: retrieves detailed info about an object
  - `kubectl logs <object name>`: retrieves the logs created inside of the container of the object
  - `kubectl exec -it <object name> sh`: starts up a shell inside the container of the object
+ - `kubectl get pv`: retrieves information about generated persistent volumes
+ - `kubectl get pvc`: retrieves information about generated persistent volume claims
+ - `kubectl get secrets`: retrieves information about generated secrets
 
 #### Kubernetes deployment flow
 
@@ -463,3 +466,34 @@ We would have it as
  - `kubectl set image deployment/client-deployment client=stephengrider/multi-client:v8`
 
 With that, all the pods with given container name will have their image name set to the given parameter.
+
+#### Multi-container application with Kubernetes
+
+![Multi Container App with Kubernetes Overview](./zdocs/kubernetes-multi-container-app-overview.png)
+
+ - `ClusterIP`: Exposes a set of pods to other objects **in the cluster**. No one from the outside of cluster can access the deployment. This is the difference between the `ClusterIP` and the `NodePort`.
+ - `Postgres PVC`: If we write the data inside of the container, it will be gone if the Pod crashed/deleted. To overcome that, we need to persist the data. Whenever a request come to the `Postgres`, it will store the data on the host machine and achieve the persistency.
+    
+   - ![Persisting data with volume](./zdocs/kubernetes-persisting-data-with-volumes.png)
+   - There is a catch though. We used `Volume` to access to the filesystem out of the containers. In the Kubernetes world, outside of the Container is the Pod. Since the Pod can be crash or get deleted, this approach will not work for us to persist the data. Thus- we must store the data outside of the Pod.
+   - ![Persistent volume vs volume](./zdocs/kubernetes-persistent-volume-vs-volume.png)
+   - `Persisten Volume Claim` is an advertisement to all clusters inside a pod says: **you can choose one of those options**. It **can't** store anything. If advertised option exist at the storage, then it served and this approach called as `Statically provisioned Persistent Volume`. Those values already generated ahead of the request and can be directly consumed. If the advertised option does exist at the storage, the option will be generated on-the-fly only when the user requested it and that is called as `Dynamically provisioned Persisten Volume`.
+   - If we are on our local environment, the `Persistent Volume` will be created out of a slice (according to our configuration) of the hard drive. If we are on a cloud provider, that will be done according to our specific configuration for that cloud provider.
+   - ![Persistent claim and volume](./zdocs/kubernetes-persistent-volume-and-claim.png)
+
+
+There are general steps that we follow while developing our applications via kubernetes. It is as below:
+
+![Path to production](./zdocs/kubernetes-path-to-production.png)
+
+#### Combined Configuration for the Objects
+
+This is great to bundle all the related stuff together but will be hassle for a new-comer to the project to spot working objects. It is always better to have seperate files for each object. But it is good to know there is an alternative way, too.
+
+![Combined configuration for objects](./zdocs/kubernetes-combined-config-file.png)
+
+#### Defining Secrets for Cluster
+
+We are going to use an imperative way to create environment variable for our secrets. It is better to define them in that way to not get secrets exposed.
+
+![Kubectl cluster secret](./zdocs/kubernetes-cluster-secret.png)

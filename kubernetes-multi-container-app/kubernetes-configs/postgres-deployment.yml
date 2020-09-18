@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: postgres
+  template:
+    metadata:
+      labels:
+        component: postgres
+    spec:
+      volumes: # That will allocate the storage and then we will use that from different containers
+        - name: postgres-storage # Name of the storage we allocate
+          persistentVolumeClaim:
+            claimName: database-persistent-volume-claim # Name of the object we created at `database-persistent-volume-claim.yml`
+      containers:
+        - name: postgres
+          image: postgres
+          ports:
+            - containerPort: 5432
+          volumeMounts: # Defines how should that container use the storage
+            - name: postgres-storage # Name of the storage that we want to use
+              mountPath: /var/lib/postgresql/data # Designated directory to store data on hard drive. This path is the default of the postgres
+              subPath: postgres # Additional and required for the postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
+
+    

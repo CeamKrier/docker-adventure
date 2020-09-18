@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-cluster-ip-service
+spec:
+  type: ClusterIP # Type of Service
+  selector:
+    component: server # Will manage the access to the Deployment with given key-value pair
+  ports:
+    - port: 5000 # Access point of the server-cluster-ip-service
+      targetPort: 5000 # Will be redirected to the server-deployment's port

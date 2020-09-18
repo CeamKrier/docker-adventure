@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: # Deployment metadata
+  name: server-deployment
+spec: # Deployment spec
+  replicas: 3 # Number of Pod to run
+  selector:
+    matchLabels: # Tells what pods the deployment will apply to
+      component: server
+  template: # Pod template
+    metadata: # Pod metadata
+      labels:
+        component: server
+    spec: # Pod spec
+      containers:
+        - name: server
+          image: stephengrider/multi-server
+          ports:
+            - containerPort: 5000 # Exposed container port
+          env:
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: '6379'
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: postgres-cluster-ip-service
+            - name: PGDATABASE
+              value: postgres
+            - name: PGPORT
+              value: '5432'
+            - name: PGPASSWORD
+              valueFrom: # Retrieving the generated secret object
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD

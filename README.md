@@ -4,6 +4,42 @@ Those notes based on the udemy course that being given by [Stephen Grider](https
 
 ### Legend
 
+- [Why docker?](https://github.com/CeamKrier/docker-adventure#why-docker)
+- [What is docker?](https://github.com/CeamKrier/docker-adventure#what-is-docker)
+- [How does ](https://github.com/CeamKrier/docker-adventure#how-does-docker-run-hello-world-work)
+- [How does container work?](https://github.com/CeamKrier/docker-adventure#how-does-container-work)
+- [Relation between Image and Container](https://github.com/CeamKrier/docker-adventure#relation-between-image-and-container)
+- [How does docker run on my computer if namespacing is just specific for the Linux OS?](https://github.com/CeamKrier/docker-adventure#how-does-docker-run-on-my-computer-if-namespacing-is-just-specific-for-the-linux-os)
+- [Commands](https://github.com/CeamKrier/docker-adventure#commands)
+- [Flags](https://github.com/CeamKrier/docker-adventure#flags)
+- [Creating custom images](https://github.com/CeamKrier/docker-adventure#creating-custom-images)
+- [Build process](https://github.com/CeamKrier/docker-adventure#build-process)
+- [Tagging an image](https://github.com/CeamKrier/docker-adventure#tagging-an-image)
+- [A NodeJS app with docker](https://github.com/CeamKrier/docker-adventure#a-nodejs-app-with-docker)
+- [Docker Compose](https://github.com/CeamKrier/docker-adventure#docker-compose)
+- [Docker Compose commands](https://github.com/CeamKrier/docker-adventure#docker-compose-commands)
+- [Automatic container restart in docker-compose](https://github.com/CeamKrier/docker-adventure#automatic-container-restart-in-docker-compose)
+- [Checking the status of docker-composed containers](https://github.com/CeamKrier/docker-adventure#checking-the-status-of-docker-composed-containers)
+- [Docker volumes](https://github.com/CeamKrier/docker-adventure#docker-volumes)
+- [Live updating tests](https://github.com/CeamKrier/docker-adventure#live-updating-tests)
+- [Production grade dockerfile](https://github.com/CeamKrier/docker-adventure#production-grade-dockerfile)
+- [Multi container application](https://github.com/CeamKrier/docker-adventure#multi-container-application)
+- [Production flow of multi container application](https://github.com/CeamKrier/docker-adventure#production-flow-of-multi-container-application)
+- [Kubernetes](https://github.com/CeamKrier/docker-adventure#kubernetes)
+- [Comparison of Docker Compose to Kubernetes configuration](https://github.com/CeamKrier/docker-adventure#comparison-of-docker-compose-to-kubernetes-configuration)
+- [Interaction between Service NodePort and Pod](https://github.com/CeamKrier/docker-adventure#interaction-between-service-nodeport-and-pod)
+- [NodePort Service ports in detail](https://github.com/CeamKrier/docker-adventure#nodeport-service-ports-in-detail)
+- [Kubectl Commands](https://github.com/CeamKrier/docker-adventure#kubectl-commands)
+- [Kubernetes deployment flow](https://github.com/CeamKrier/docker-adventure#kubernetes-deployment-flow)
+- [Takeaways of Kubernetes](https://github.com/CeamKrier/docker-adventure#takeaways-of-kubernetes)
+- [Declarative vs. Imperative Deployments](https://github.com/CeamKrier/docker-adventure#declarative-vs-imperative-deployments)
+- [Updating an existing Pod](https://github.com/CeamKrier/docker-adventure#updating-an-existing-pod)
+- [Why we use Services?](https://github.com/CeamKrier/docker-adventure#why-we-use-services)
+- [Updating a deployment image](https://github.com/CeamKrier/docker-adventure#updating-a-deployment-image)
+- [Multi-container application with Kubernetes](https://github.com/CeamKrier/docker-adventure#multi-container-application-with-kubernetes)
+- [Combined Configuration for the Objects](https://github.com/CeamKrier/docker-adventure#combined-configuration-for-the-objects)
+- [Defining Secrets for Cluster](https://github.com/CeamKrier/docker-adventure#defining-secrets-for-cluster)
+
 ### Why docker?
 
 ![Why Docker?](./zdocs/why-docker.png)
@@ -103,32 +139,32 @@ and the Linux kernel then will be able to do namespacing on your hardware.
 
 ### Commands
 
- - `docker ps`: shows running docker containers
- - `docker ps --all`: shows all containers that have ran
- - `docker system prune`: removes stopped containers, build cache, dangling images
- - `docker create <container name>`: creates a container, returns id of it
- - `docker start <container id>`: starts the container in silent mode, outputs wont display (contrary to docker run which is compose of create + start and shows logs)
- - `docker stop <container id>`: stops container and gives possibility to do cleanup etc.
- - `docker kill <container id>`: stops container immediately, no cleanup. If `docker stop` cannot stop the container in 10 sec, then this command automatically being run to kill process
- - `docker logs <container id>`: shows all the logs have been emitted while container working, does not re-run the container
- - `docker exec -it <container id> <command>`: allows us to run extra command in an already running container ex: running `docker run redis` and then the redis-cli inside the running container
- - `docker exec -it <container id> sh/bash/zsh/powershell…`: opens the terminal of the container
- - `docker build -f Dockerfile.dev .`: generates the image with a custom named dockerfile
- - `docker-compose rm`: removes generated docker-compose containers. Useful on re-runs if the `--build` does not do the trick
- - `docker-compose up/down`: starts related services of docker-compose and stops
- - `docker-compose ps`: shows running docker-compose containers
+- `docker ps`: shows running docker containers
+- `docker ps --all`: shows all containers that have ran
+- `docker system prune`: removes stopped containers, build cache, dangling images
+- `docker create <container name>`: creates a container, returns id of it
+- `docker start <container id>`: starts the container in silent mode, outputs wont display (contrary to docker run which is compose of create + start and shows logs)
+- `docker stop <container id>`: stops container and gives possibility to do cleanup etc.
+- `docker kill <container id>`: stops container immediately, no cleanup. If `docker stop` cannot stop the container in 10 sec, then this command automatically being run to kill process
+- `docker logs <container id>`: shows all the logs have been emitted while container working, does not re-run the container
+- `docker exec -it <container id> <command>`: allows us to run extra command in an already running container ex: running `docker run redis` and then the redis-cli inside the running container
+- `docker exec -it <container id> sh/bash/zsh/powershell…`: opens the terminal of the container
+- `docker build -f Dockerfile.dev .`: generates the image with a custom named dockerfile
+- `docker-compose rm`: removes generated docker-compose containers. Useful on re-runs if the `--build` does not do the trick
+- `docker-compose up/down`: starts related services of docker-compose and stops
+- `docker-compose ps`: shows running docker-compose containers
 
 ### Flags
 
- - `start -a`: shows the output of the container in the terminal window where it ran
- - `logs -f/--follow`: live log tracing
- - `exec -it`: allows us to provide input to the container
- - `run -it sh`: start the container with shell, keeps default commands from running. Ultimately good for testing stuff ex: NodeJS to run js codes like chrome devtools
- - `exec -i`: gets the typed stuff to the running processes STDIN. It runs the command
+- `start -a`: shows the output of the container in the terminal window where it ran
+- `logs -f/--follow`: live log tracing
+- `exec -it`: allows us to provide input to the container
+- `run -it sh`: start the container with shell, keeps default commands from running. Ultimately good for testing stuff ex: NodeJS to run js codes like chrome devtools
+- `exec -i`: gets the typed stuff to the running processes STDIN. It runs the command
 
 ![Docker exec flag](./zdocs/docker-exec-flag.png)
 
- - `exec -t`: nicely formats + autocompletes (if command capable to do) the outputs on the screen
+- `exec -t`: nicely formats + autocompletes (if command capable to do) the outputs on the screen
 
 ### Creating custom images
 
@@ -295,7 +331,7 @@ With that, whenever the content of tests change, they will automatically re-run.
 
 ![Production version dockerfile](./zdocs/dockerfile-production-version.png)
 
-There is two separate steps to make production version of react app to work. At first, the react application built. 
+There is two separate steps to make production version of react app to work. At first, the react application built.
 Then it served with the nginx server.
 
 ![Why nginx required for production?](./zdocs/docker-production-nginx.png)
@@ -308,11 +344,12 @@ We must have a server to serve files that are generated by the react build proce
 
 - `nginx` will be responsible with routing requests to either `react-dev-server` or to the `Express API` that we created.
 - There will be two data store
+
   - `redis` will be holding indexes and their calculated fibonacci values in memory
   - `postgres` will be holding indexes in persistent database
-  
+
   ![Postgres and Redis usage in fibonacci calculator](./zdocs/postgres-redis-fibb.png)
-  
+
   - `worker` will be responsible to listen `redis` events and calculate `fibonacci` values then store them on `redis`
 
 ### Production flow of multi container application
@@ -371,7 +408,7 @@ We **can interact** with kubernetes cluster by reaching out to this master.
 
 ![Kkubernetes vs docker compose flow](./zdocs/kubernetes-vs-docker-compose-flow.png)
 
-There is a naming convention while defining our configuration files for the kubernetes; `Pod` and `Node`. 
+There is a naming convention while defining our configuration files for the kubernetes; `Pod` and `Node`.
 
 ![Pod and Node naming convention on config files](./zdocs/pod-and-node-naming-convention-on-config-files.png)
 
@@ -412,18 +449,18 @@ The service will establish a comminication layer between outside world and the c
 
 ### Kubectl Commands
 
- - `kubectl apply -f <config file>`: generates a new object out of the configuration file. `-f` says we have a config file for that
- - `kubectl get pods`: retrieves information about generated pod objets. `-o wide` to have more details.
- - `kubectl get services`: retrieves information about generated service objects
- - `kubectl get deployments`: retrieves information about generated deployment objects
- - `kubectl delete <object type>/<object name>`: removes the generated object
- - `kubectl delete -f <config file>`: removes the generated object according to given config file
- - `kubectl describe <object type> <object name>`: retrieves detailed info about an object
- - `kubectl logs <object name>`: retrieves the logs created inside of the container of the object
- - `kubectl exec -it <object name> sh`: starts up a shell inside the container of the object
- - `kubectl get pv`: retrieves information about generated persistent volumes
- - `kubectl get pvc`: retrieves information about generated persistent volume claims
- - `kubectl get secrets`: retrieves information about generated secrets
+- `kubectl apply -f <config file>`: generates a new object out of the configuration file. `-f` says we have a config file for that
+- `kubectl get pods`: retrieves information about generated pod objets. `-o wide` to have more details.
+- `kubectl get services`: retrieves information about generated service objects
+- `kubectl get deployments`: retrieves information about generated deployment objects
+- `kubectl delete <object type>/<object name>`: removes the generated object
+- `kubectl delete -f <config file>`: removes the generated object according to given config file
+- `kubectl describe <object type> <object name>`: retrieves detailed info about an object
+- `kubectl logs <object name>`: retrieves the logs created inside of the container of the object
+- `kubectl exec -it <object name> sh`: starts up a shell inside the container of the object
+- `kubectl get pv`: retrieves information about generated persistent volumes
+- `kubectl get pvc`: retrieves information about generated persistent volume claims
+- `kubectl get secrets`: retrieves information about generated secrets
 
 ### Kubernetes deployment flow
 
@@ -437,8 +474,8 @@ If a container somehow gets terminated, the master will be notified about that. 
 
 ### Declarative vs. Imperative Deployments
 
-There is two way to convey what we want from Kubernetes to do: declarative or imperative approach. 
-Mostly, declarative approach used by the community. Beacuse, most of the work handled by the internals of the Kubernetes in that way. It way more easier than imperative approach. 
+There is two way to convey what we want from Kubernetes to do: declarative or imperative approach.
+Mostly, declarative approach used by the community. Beacuse, most of the work handled by the internals of the Kubernetes in that way. It way more easier than imperative approach.
 
 ![Declarative vs Imperative Deployment](./zdocs/kubernetes-declarative-vs-imperative-deployment.png)
 
@@ -462,10 +499,11 @@ Thats why we are using the `Service`. It will hold the necessary info about the 
 
 Let's say we made some changes to our docker image and want to update our kubernetes pods according to it. To achieve that, we need to set the image name via an imperative command.
 
- - `kubectl set image <object type>/<object name> <container name>=<new image name>`
+- `kubectl set image <object type>/<object name> <container name>=<new image name>`
 
 We would have it as
- - `kubectl set image deployment/client-deployment client=stephengrider/multi-client:v8`
+
+- `kubectl set image deployment/client-deployment client=stephengrider/multi-client:v8`
 
 With that, all the pods with given container name will have their image name set to the given parameter.
 
@@ -473,16 +511,14 @@ With that, all the pods with given container name will have their image name set
 
 ![Multi Container App with Kubernetes Overview](./zdocs/kubernetes-multi-container-app-overview.png)
 
- - `ClusterIP`: Exposes a set of pods to other objects **in the cluster**. No one from the outside of cluster can access the deployment. This is the difference between the `ClusterIP` and the `NodePort`.
- - `Postgres PVC`: If we write the data inside of the container, it will be gone if the Pod crashed/deleted. To overcome that, we need to persist the data. Whenever a request come to the `Postgres`, it will store the data on the host machine and achieve the persistency.
-    
-   - ![Persisting data with volume](./zdocs/kubernetes-persisting-data-with-volumes.png)
-   - There is a catch though. We used `Volume` to access to the filesystem out of the containers. In the Kubernetes world, outside of the Container is the Pod. Since the Pod can be crash or get deleted, this approach will not work for us to persist the data. Thus- we must store the data outside of the Pod.
-   - ![Persistent volume vs volume](./zdocs/kubernetes-persistent-volume-vs-volume.png)
-   - `Persisten Volume Claim` is an advertisement to all clusters inside a pod says: **you can choose one of those options**. It **can't** store anything. If advertised option exist at the storage, then it served and this approach called as `Statically provisioned Persistent Volume`. Those values already generated ahead of the request and can be directly consumed. If the advertised option does exist at the storage, the option will be generated on-the-fly only when the user requested it and that is called as `Dynamically provisioned Persisten Volume`.
-   - If we are on our local environment, the `Persistent Volume` will be created out of a slice (according to our configuration) of the hard drive. If we are on a cloud provider, that will be done according to our specific configuration for that cloud provider.
-   - ![Persistent claim and volume](./zdocs/kubernetes-persistent-volume-and-claim.png)
-
+- `ClusterIP`: Exposes a set of pods to other objects **in the cluster**. No one from the outside of cluster can access the deployment. This is the difference between the `ClusterIP` and the `NodePort`.
+- `Postgres PVC`: If we write the data inside of the container, it will be gone if the Pod crashed/deleted. To overcome that, we need to persist the data. Whenever a request come to the `Postgres`, it will store the data on the host machine and achieve the persistency.
+  - ![Persisting data with volume](./zdocs/kubernetes-persisting-data-with-volumes.png)
+  - There is a catch though. We used `Volume` to access to the filesystem out of the containers. In the Kubernetes world, outside of the Container is the Pod. Since the Pod can be crash or get deleted, this approach will not work for us to persist the data. Thus- we must store the data outside of the Pod.
+  - ![Persistent volume vs volume](./zdocs/kubernetes-persistent-volume-vs-volume.png)
+  - `Persisten Volume Claim` is an advertisement to all clusters inside a pod says: **you can choose one of those options**. It **can't** store anything. If advertised option exist at the storage, then it served and this approach called as `Statically provisioned Persistent Volume`. Those values already generated ahead of the request and can be directly consumed. If the advertised option does exist at the storage, the option will be generated on-the-fly only when the user requested it and that is called as `Dynamically provisioned Persisten Volume`.
+  - If we are on our local environment, the `Persistent Volume` will be created out of a slice (according to our configuration) of the hard drive. If we are on a cloud provider, that will be done according to our specific configuration for that cloud provider.
+  - ![Persistent claim and volume](./zdocs/kubernetes-persistent-volume-and-claim.png)
 
 There are general steps that we follow while developing our applications via kubernetes. It is as below:
 
